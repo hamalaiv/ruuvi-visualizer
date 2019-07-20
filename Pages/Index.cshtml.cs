@@ -18,8 +18,6 @@ namespace ruuvi_visualizer.Pages
         public IndexModel(IConfiguration config)
         {
             _config = config;
-            ApiKey = _config["Secrets:ApiKey"];
-            TempDeviceId = _config["Secrets:TempDeviceId"];
         }
         
         public void OnGet()
