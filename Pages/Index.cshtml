@@ -11,8 +11,11 @@
     <canvas id="myChart" width="400" height="400"></canvas>
     <script>
         var modelData = @Html.Raw(Model.Data);
-        var deviceData = modelData.map(x => {
+        var temperatureData = modelData.map(x => {
             return { t: x.timestamp, y: x.temperature };
+        });
+        var humidityData = modelData.map(x => {
+            return { t: x.timestamp, y: x.humidity };
         });
     </script>
 </div>

@@ -6,9 +6,20 @@ var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        datasets: [{
-            label: '# of Votes',
-            data: deviceData
+        datasets: [
+        {
+            label: 'temperature °C',
+            borderColor: "#dc3545",
+            backgroundColor: "#dc3545",
+            fill: false,
+            data: temperatureData
+        },
+        {
+            label: 'humidity %',
+            borderColor: "#17a2b8",
+            backgroundColor: "#17a2b8",
+            fill: false,
+            data: humidityData
         }]
     },
     options: {
@@ -19,7 +30,8 @@ var myChart = new Chart(ctx, {
                     unit: 'day'
                 }
             }],
-            yAxes: [{
+            yAxes: [
+            {
                 ticks: {
                     beginAtZero: true
                 }
