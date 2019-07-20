@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <RootNamespace>ruuvi_visualizer</RootNamespace>
+    <UserSecretsId>a47b9a3e-91d4-4597-bebc-248de50be819</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
