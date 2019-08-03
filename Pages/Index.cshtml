@@ -5,18 +5,10 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     <a asp-page="./Index" asp-route-id="1">Get my device data</a>
     <canvas id="myChart" width="400" height="400"></canvas>
     <script>
         var modelData = @Html.Raw(Model.Data);
-        var temperatureData = modelData.map(x => {
-            return { t: x.timestamp, y: x.temperature };
-        });
-        var humidityData = modelData.map(x => {
-            return { t: x.timestamp, y: x.humidity };
-        });
     </script>
 </div>
 

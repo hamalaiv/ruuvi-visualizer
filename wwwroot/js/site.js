@@ -1,7 +1,16 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-// Write your Javascript code.
+// var modelData is declared in another file and
+// it contains all data from a device
+
+var temperatureData = modelData.map(x => {
+    return { t: moment.utc(x.timestamp).toDate(), y: x.temperature };
+});
+var humidityData = modelData.map(x => {
+    return { t: moment.utc(x.timestamp).toDate(), y: x.humidity };
+});
+
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
@@ -27,7 +36,8 @@ var myChart = new Chart(ctx, {
             xAxes: [{
                 type: 'time',
                 time: {
-                    unit: 'day'
+                    unit: 'day',
+                    parser: "DD.MM."
                 }
             }],
             yAxes: [
