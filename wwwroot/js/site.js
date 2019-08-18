@@ -4,10 +4,15 @@
 // var modelData is declared in another file and
 // it contains all data from a device
 
-var temperatureData = modelData.map(x => {
+var filteredData = [];
+for(let i=0, len=modelData.length; i<len; i+=4){
+    filteredData.push(modelData[i]);
+}
+
+var temperatureData = filteredData.map(x => {
     return { t: moment.utc(x.timestamp).toDate(), y: x.temperature };
 });
-var humidityData = modelData.map(x => {
+var humidityData = filteredData.map(x => {
     return { t: moment.utc(x.timestamp).toDate(), y: x.humidity };
 });
 
@@ -21,6 +26,7 @@ var myChart = new Chart(ctx, {
             borderColor: "#dc3545",
             backgroundColor: "#dc3545",
             fill: false,
+            pointRadius: 2,
             data: temperatureData
         },
         {
@@ -28,10 +34,13 @@ var myChart = new Chart(ctx, {
             borderColor: "#17a2b8",
             backgroundColor: "#17a2b8",
             fill: false,
+            pointRadius: 2,
             data: humidityData
         }]
     },
     options: {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
             xAxes: [{
                 type: 'time',
