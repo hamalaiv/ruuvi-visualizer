@@ -4,16 +4,11 @@
 // var modelData is declared in another file and
 // it contains all data from a device
 
-var filteredData = [];
-for(let i=0, len=modelData.length; i<len; i+=4){
-    filteredData.push(modelData[i]);
-}
-
-var temperatureData = filteredData.map(x => {
-    return { t: moment.utc(x.timestamp).toDate(), y: x.temperature };
+var temperatureData = modelData.map(x => {
+    return { x: moment.utc(x.timestamp).toDate(), y: x.temperature };
 });
-var humidityData = filteredData.map(x => {
-    return { t: moment.utc(x.timestamp).toDate(), y: x.humidity };
+var humidityData = modelData.map(x => {
+    return { x: moment.utc(x.timestamp).toDate(), y: x.humidity };
 });
 
 // animations disabled for performance reasons
@@ -51,6 +46,10 @@ var myChart = new Chart(ctx, {
             animationDuration: 0 // duration of animations when hovering an item
         },
         responsiveAnimationDuration: 0, // animation duration after a resize
+        downsample: {
+            enabled: true,
+            threshold: 50 // max number of points to display per dataset
+        },
         scales: {
             xAxes: [{
                 type: 'time',
