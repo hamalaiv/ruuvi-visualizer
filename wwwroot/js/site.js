@@ -50,6 +50,11 @@ var myChart = new Chart(ctx, {
             enabled: true,
             threshold: 50 // max number of points to display per dataset
         },
+        elements: {
+            line: {
+                tension: 0.2
+            }
+        },
         scales: {
             xAxes: [{
                 type: 'time',
