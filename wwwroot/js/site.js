@@ -16,6 +16,7 @@ var humidityData = filteredData.map(x => {
     return { t: moment.utc(x.timestamp).toDate(), y: x.humidity };
 });
 
+// animations disabled for performance reasons
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
@@ -26,7 +27,8 @@ var myChart = new Chart(ctx, {
             borderColor: "#dc3545",
             backgroundColor: "#dc3545",
             fill: false,
-            pointRadius: 2,
+            pointRadius: 0,
+            pointHitRadius: 5,
             data: temperatureData
         },
         {
@@ -34,13 +36,21 @@ var myChart = new Chart(ctx, {
             borderColor: "#17a2b8",
             backgroundColor: "#17a2b8",
             fill: false,
-            pointRadius: 2,
+            pointRadius: 0,
+            pointHitRadius: 5,
             data: humidityData
         }]
     },
     options: {
         responsive: true,
         maintainAspectRatio: false,
+        animation: {
+            duration: 0 // general animation time
+        },
+        hover: {
+            animationDuration: 0 // duration of animations when hovering an item
+        },
+        responsiveAnimationDuration: 0, // animation duration after a resize
         scales: {
             xAxes: [{
                 type: 'time',
