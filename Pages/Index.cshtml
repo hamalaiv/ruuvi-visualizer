@@ -4,10 +4,65 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
+<div class="content text-center">
     <a asp-page="./Index" asp-route-id="1">Get my device data</a>
-    <div class="chart-container" style="position:relative;height:50vh;width:100%">
-        <canvas id="myChart"></canvas>
+
+    <div class="frame current__frame row">
+        <div class="col">
+            <span class="title current__title">Temperature</span>
+            <div class="current__box--temp">
+                <span id="current-temp" class="current__value--temp">22.1°C</span>
+            </div>
+        </div>
+
+        <div class="col">
+            <span class="title current__title">Humidity</span>
+            <div class="current__box--humd">
+                <span id="current-humd" class="current__value--humd">49%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="frame row">
+        <span class="title chart__title">Temperature</span>
+        <div id="chart-temp-controls" class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Time controls">
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="chart-temp-all" autocomplete="off"> All time
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="chart-temp-month" autocomplete="off"> This month
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="chart-temp-week" autocomplete="off"> This week
+            </label>
+            <label class="btn btn-secondary active">
+                <input type="radio" name="options" id="chart-temp-today" autocomplete="off" checked> Today
+            </label>
+        </div>
+        <div class="chart__container">
+            <canvas id="chart-temp"></canvas>
+        </div>
+    </div>
+
+    <div class="frame row">
+        <span class="title chart__title">Humidity</span>
+        <div id="chart-humd-controls" class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Time controls">
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="chart-humd-all" autocomplete="off"> All time
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="chart-humd-month" autocomplete="off"> This month
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="chart-humd-week" autocomplete="off"> This week
+            </label>
+            <label class="btn btn-secondary active">
+                <input type="radio" name="options" id="chart-humd-today" autocomplete="off" checked> Today
+            </label>
+        </div>
+        <div class="chart__container">
+            <canvas id="chart-humd"></canvas>
+        </div>
     </div>
     
     <script>
