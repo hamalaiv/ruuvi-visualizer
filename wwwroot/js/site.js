@@ -30,7 +30,13 @@ var chartOptions =  {
     responsiveAnimationDuration: 0, // animation duration after a resize
     downsample: {
         enabled: true,
-        threshold: 50 // max number of points to display per dataset
+        threshold: 50, // max number of points to display per dataset
+
+        auto: true, // don't re-downsample the data every move
+        onInit: true, // but do resample it when we init the chart (this is default)
+
+        preferOriginalData: false, // use our original data when downscaling so we can downscale less, if we need to.
+        restoreOriginalData: false, // if auto is false and this is true, original data will be restored on pan/zoom - that isn't what we want.
     },
     elements: {
         line: {
@@ -66,7 +72,7 @@ var chartTemp = new Chart(ctxTemp, {
             fill: false,
             pointRadius: 0,
             pointHitRadius: 5,
-            data: tempData
+            data: tempData.filter(d => moment(d.x).isAfter(moment.utc().add(-1, "d"))) // Today data by default
         }]
     },
     options: chartOptions
@@ -84,50 +90,54 @@ var chartHumd = new Chart(ctxHumd, {
             fill: false,
             pointRadius: 0,
             pointHitRadius: 5,
-            data: humdData
+            data: humdData.filter(d => moment(d.x).isAfter(moment.utc().add(-1, "d"))) // Today data by default
         }]
     },
     options: chartOptions
 });
 
+console.log(chartHumd.data.datasets[0].data);
+
 $("#chart-temp-controls :input").change(e => {
     switch(e.target.id){
         case "chart-temp-all":
             chartTemp.data.datasets[0].data = tempData;
-            chartTemp.update();
             break;
         case "chart-temp-month":
             chartTemp.data.datasets[0].data = tempData.filter(d => moment(d.x).isAfter(moment.utc().add(-1, "M")));
-            chartTemp.update();
             break;
         case "chart-temp-week":
             chartTemp.data.datasets[0].data = tempData.filter(d => moment(d.x).isAfter(moment.utc().add(-7, "d")));
-            chartTemp.update();
             break;
         case "chart-temp-today":
             chartTemp.data.datasets[0].data = tempData.filter(d => moment(d.x).isAfter(moment.utc().add(-1, "d")));
-            chartTemp.update();
             break;
     }
+
+    chartTemp.update();
+
+    // update second time to get downscale work properly
+    chartTemp.update();
 });
 
 $("#chart-humd-controls :input").change(e => {
     switch(e.target.id){
         case "chart-humd-all":
             chartHumd.data.datasets[0].data = humdData;
-            chartHumd.update();
             break;
         case "chart-humd-month":
             chartHumd.data.datasets[0].data = humdData.filter(d => moment(d.x).isAfter(moment.utc().add(-1, "M")));
-            chartHumd.update();
             break;
         case "chart-humd-week":
             chartHumd.data.datasets[0].data = humdData.filter(d => moment(d.x).isAfter(moment.utc().add(-7, "d")));
-            chartHumd.update();
             break;
         case "chart-humd-today":
             chartHumd.data.datasets[0].data = humdData.filter(d => moment(d.x).isAfter(moment.utc().add(-1, "d")));
-            chartHumd.update();
             break;
     }
+
+    chartHumd.update();
+
+    // update second time to get downscale work properly
+    chartHumd.update();
 });
