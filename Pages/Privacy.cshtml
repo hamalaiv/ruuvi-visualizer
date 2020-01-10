@@ -6,20 +6,30 @@
 @* <h1>@ViewData["Title"]</h1> *@
 
 <div id="list"></div>
-<button style='font-size:24px' onclick="addToList()">Paina tästä</button>
+<div>
+    <button style='font-size:24px' onclick="addToList()">Paina tästä</button>
+    <button style='font-size:24px' onclick="clearList()">Tyhjennä</button>
+</div>
+
 
 <script>
-    var listItems;
     function addToList(){
+        var json = localStorage.getItem("timelist");
+        var listItems = json ? JSON.parse(json) : [];
         var now = moment();
         
-        listItems = listItems || [];
         if(!listItems.length){
-            $("#list").append("<p style='font-size:28px'>aika: " + now.format("HH:mm") + "<p>");
+            $("#list").append("<p style='font-size:20px'>aika: " + now.format("HH:mm") + "<p>");
         }
         else{
-            $("#list").append("<p style='font-size:28px'>aika: " + now.format("HH:mm") + " (" + listItems[listItems.length - 1].from(now) + ")" + "<p>");
+            $("#list").append("<p style='font-size:20px'>aika: " + now.format("HH:mm") + " (" + moment(listItems[listItems.length - 1]).from(now) + ")" + "<p>");
         }
         listItems.push(now);
+        localStorage.setItem("timelist", JSON.stringify(listItems));
+    }
+
+    function clearList(){
+        localStorage.setItem("timelist", "");
+        $("#list").empty();
     }
 </script>
