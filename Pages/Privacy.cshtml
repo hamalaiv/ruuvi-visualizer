@@ -13,16 +13,33 @@
 
 
 <script>
+    var initialJson = localStorage.getItem("timelist");
+    var initialItems = initialJson ? JSON.parse(initialJson) : [];
+    
+    if(initialItems.length){
+        $("#list").append("<p style='font-size:18px'>" + moment(initialItems[0]).format("DD.MM.YYYY HH:mm") + "<p>");
+        let prev = initialItems[0];
+        let skipFirst = true;
+        initialItems.forEach(v => {
+            if(skipFirst){
+                skipFirst = false;
+            }else{
+                $("#list").append("<p style='font-size:18px'>" + moment(v).format("DD.MM.YYYY HH:mm") + " (" + moment(prev).from(v) + ")" + "<p>");
+                prev = v;
+            }
+        });
+    }
+    
     function addToList(){
         var json = localStorage.getItem("timelist");
         var listItems = json ? JSON.parse(json) : [];
         var now = moment();
         
         if(!listItems.length){
-            $("#list").append("<p style='font-size:20px'>aika: " + now.format("HH:mm") + "<p>");
+            $("#list").append("<p style='font-size:18px'>" + now.format("DD.MM.YYYY HH:mm") + "<p>");
         }
         else{
-            $("#list").append("<p style='font-size:20px'>aika: " + now.format("HH:mm") + " (" + moment(listItems[listItems.length - 1]).from(now) + ")" + "<p>");
+            $("#list").append("<p style='font-size:18px'>" + now.format("DD.MM.YYYY HH:mm") + " (" + moment(listItems[listItems.length - 1]).from(now) + ")" + "<p>");
         }
         listItems.push(now);
         localStorage.setItem("timelist", JSON.stringify(listItems));
